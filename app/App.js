@@ -1,7 +1,12 @@
 var React = require('react');
-var TableColumn = require('./TableColumn');
+var Table = require('./Table');
 
 var candidates = {
+    "headers": [
+        'name',
+        'email'
+    ],
+
     "data": [{
         "id": 1,
             "name": "Leanne Graham",
@@ -226,10 +231,45 @@ var candidates = {
 };
 
 var App = React.createClass({
+    getInitialState () {
+        return {
+            data: candidates.data,
+            nameQuery: '',
+            websiteQuery: '',
+            filteredData: candidates.data
+        };
+    },
+
+    filterChange (name, e) {
+        var query = {};
+
+        if (!e.target.value) {
+            query[name + 'Query'] = '';
+        } else {
+            query[name + 'Query'] = e.target.value;
+        }
+
+        this.setState(query);
+
+        this.filterData(name, e.target.value);
+    },
+
+    filterData (name, filterQuery) {
+        var filtered = this.state.data.filter((candidate) => {
+            return candidate[name].toLowerCase().indexOf(filterQuery.toLowerCase()) > -1;
+        });
+
+        this.setState({
+            filteredData: filtered
+        });
+    },
+
     render () {
         return (
             <div>
-                <TableColumn name="name" data={candidates.data} />
+                <input type="text" name="name" onChange={this.filterChange.bind(this, 'name')} value={this.state.filterQuery} />
+                <input type="text" name="website" onChange={this.filterChange.bind(this, 'website')} value={this.state.filterQuery} />
+                <Table headers={candidates.headers} data={this.state.filteredData} />
             </div>
         );
     }
