@@ -226,41 +226,11 @@ var candidates = {
 };
 
 var App = React.createClass({
-    getInitialState () {
-        return {
-            candidates: candidates.data,
-            filter: ''
-        };
-    },
-
-    filterChange (e) {
-        this.setState({ filter: e.target.value });
-
-        if (!e.target.value) {
-            this.setState({ filter: '' });
-        }
-
-        this.filterCandidates(e.target.value);
-    },
-
-    filterCandidates (filterFor) {
-        var filtered = candidates.data.filter((candidate) => {
-            return candidate.name.toLowerCase().indexOf(filterFor.toLowerCase()) > -1;
-        });
-
-        this.setState({
-            candidates: filtered
-        });
-    },
-
     render () {
         return (
-                <div>
-                <input type="text" onChange={this.filterChange} value={this.state.filter} ref="nameFilter"/>
-                <TableColumn data={this.state.candidates} />
-                <p>Filtering for {this.state.filter}</p>
-                <p>{this.state.candidates.length} of {candidates.data.length}</p>
-                </div>
+            <div>
+                <TableColumn name="name" data={candidates.data} />
+            </div>
         );
     }
 });
