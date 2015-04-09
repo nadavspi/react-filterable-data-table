@@ -234,29 +234,24 @@ var App = React.createClass({
     getInitialState () {
         return {
             data: candidates.data,
+            filteredData: candidates.data,
             nameQuery: '',
-            websiteQuery: '',
-            filteredData: candidates.data
+            websiteQuery: ''
         };
     },
 
     filterChange (name, e) {
         var query = {};
-
-        if (!e.target.value) {
-            query[name + 'Query'] = '';
-        } else {
-            query[name + 'Query'] = e.target.value;
-        }
-
-        this.setState(query);
-
-        this.filterData(name, e.target.value);
+        query[name + 'Query'] = e.target.value;
+        this.setState(query, this.filterData);
     },
 
-    filterData (name, filterQuery) {
-        var filtered = this.state.data.filter((candidate) => {
-            return candidate[name].toLowerCase().indexOf(filterQuery.toLowerCase()) > -1;
+    filterData () {
+        var filtered = this.state.data.filter((item) => {
+            return (
+                item.name.toLowerCase().indexOf(this.state.nameQuery.toLowerCase()) > -1 &&
+                item.website.toLowerCase().indexOf(this.state.websiteQuery.toLowerCase()) > -1
+            );
         });
 
         this.setState({
@@ -267,8 +262,8 @@ var App = React.createClass({
     render () {
         return (
             <div>
-                <input type="text" name="name" onChange={this.filterChange.bind(this, 'name')} value={this.state.filterQuery} />
-                <input type="text" name="website" onChange={this.filterChange.bind(this, 'website')} value={this.state.filterQuery} />
+                <input type="text" name="name" onChange={this.filterChange.bind(this, 'name')} value={this.state.nameQuery} />
+                <input type="text" name="website" onChange={this.filterChange.bind(this, 'website')} value={this.state.websiteQuery} />
                 <Table headers={candidates.headers} data={this.state.filteredData} />
             </div>
         );
