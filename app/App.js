@@ -8,6 +8,7 @@ var App = React.createClass({
     getInitialState () {
         return {
             data: candidates.data,
+            dataHeaders: candidates.headers,
             sortBy: {
                 property: 'name',
                 direction: ''
@@ -15,7 +16,7 @@ var App = React.createClass({
             filteredData: candidates.data.sort(sortBy('name')),
             filterQuery: {
                 name: '',
-                website: ''
+                school: ''
             }
         };
     },
@@ -31,10 +32,9 @@ var App = React.createClass({
             return (
                 item.name.toLowerCase().indexOf(this.state.filterQuery.name.toLowerCase()) > -1 &&
                     // item[x].toLowerCase().indexOf(this.state.filterQuery.name.toLowerCase()) > -1 &&
-                    item.website.toLowerCase().indexOf(this.state.filterQuery.website.toLowerCase()) > -1
+                    item.school.toLowerCase().indexOf(this.state.filterQuery.school.toLowerCase()) > -1
             );
         }).sort(sortBy(this.state.sortBy.direction + this.state.sortBy.property));
-        console.log(this.state.sortBy);
 
         this.setState({ filteredData });
     },
@@ -51,7 +51,7 @@ var App = React.createClass({
     },
 
     render () {
-        var headers = candidates.headers.map((columnName) => {
+        var headers = this.state.dataHeaders.map((columnName) => {
             return (
                 <th key={columnName}>
                     <h3>{columnName}</h3>
@@ -62,16 +62,14 @@ var App = React.createClass({
         });
 
         return (
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            {headers}
-                        </tr>
-                    </thead>
-                    <TableBody data={this.state.filteredData} />
-                </table>
-            </div>
+            <table className="pure-table">
+                <thead>
+                    <tr>
+                        {headers}
+                    </tr>
+                </thead>
+                <TableBody data={this.state.filteredData} headers={this.state.dataHeaders} />
+            </table>
         );
     }
 });
