@@ -1,7 +1,7 @@
 var candidates = {
     "headers": [
         'name',
-        'email'
+        'website'
     ],
 
     "data": [{

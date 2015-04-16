@@ -9,7 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "react": "^0.13.1"
+    "react": "^0.13.1",
+    "sort-by": "^1.1.0"
   },
   "devDependencies": {
     "babel-core": "^5.0.12",
