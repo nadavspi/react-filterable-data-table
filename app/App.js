@@ -8,7 +8,10 @@ var App = React.createClass({
     getInitialState () {
         return {
             data: candidates.data,
-            sortBy: 'name',
+            sortBy: {
+                property: 'name',
+                direction: ''
+            },
             filteredData: candidates.data.sort(sortBy('name')),
             filterQuery: {
                 name: '',
@@ -30,27 +33,42 @@ var App = React.createClass({
                     // item[x].toLowerCase().indexOf(this.state.filterQuery.name.toLowerCase()) > -1 &&
                     item.website.toLowerCase().indexOf(this.state.filterQuery.website.toLowerCase()) > -1
             );
-        }).sort(sortBy(this.state.sortBy));
-        console.log('filterdata');
+        }).sort(sortBy(this.state.sortBy.direction + this.state.sortBy.property));
         console.log(this.state.sortBy);
 
         this.setState({ filteredData });
     },
 
     sortBy (property) {
-        console.log(property);
-        this.setState({ sortBy: property }, this.filterData);
+        var direction = '';
+
+        // If already sorting by the property, switch direction
+        if (property === this.state.sortBy.property && this.state.sortBy.direction === '') {
+            direction = '-';
+        }
+
+        this.setState({ sortBy: { property, direction } }, this.filterData);
     },
 
     render () {
+        var headers = candidates.headers.map((columnName) => {
+            return (
+                <th key={columnName}>
+                    <h3>{columnName}</h3>
+                    <input type="text" name={columnName} onChange={this.filterChange.bind(this, columnName)} value={this.state.filterQuery.columnName} />
+                    <button type="button" onClick={this.sortBy.bind(this, columnName)}>sort</button>
+                </th>
+            );
+        });
+
         return (
             <div>
-                <input type="text" name="name" onChange={this.filterChange.bind(this, 'name')} value={this.state.filterQuery.name} />
-                <input type="text" name="website" onChange={this.filterChange.bind(this, 'website')} value={this.state.filterQuery.website} />
-                <button type="button" onClick={this.sortBy.bind(this, 'name')}>name</button>
-                <button type="button" onClick={this.sortBy.bind(this, 'website')}>website</button>
                 <table>
-                    <TableHead headers={candidates.headers} />
+                    <thead>
+                        <tr>
+                            {headers}
+                        </tr>
+                    </thead>
                     <TableBody data={this.state.filteredData} />
                 </table>
             </div>
