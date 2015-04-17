@@ -3,21 +3,27 @@ var TableBody = require('./TableBody');
 var candidates = require('./data');
 var sortBy = require('sort-by');
 
-var App = React.createClass({
+var DataTable = React.createClass({
+    propTypes: {
+        data: React.PropTypes.array.isRequired,
+        columns: React.PropTypes.array.isRequired,
+        defaultSort: React.PropTypes.string.isRequired
+    },
+
     getInitialState () {
-        var filterQuery = candidates.columns.reduce((columns, i) => {
+        var filterQuery = this.props.columns.reduce((columns, i) => {
             columns[i] = '';
             return columns;
         }, {});
 
         return {
-            data: candidates.data,
-            dataColumns: candidates.columns,
+            data: this.props.data,
+            dataColumns: this.props.columns,
             sortBy: {
-                property: 'name',
+                property: this.props.defaultSort,
                 direction: ''
             },
-            filteredData: candidates.data.sort(sortBy('name')),
+            filteredData: this.props.data.sort(sortBy(this.props.defaultSort)),
             filterQuery
         };
     },
@@ -58,12 +64,19 @@ var App = React.createClass({
     },
 
     render () {
-        var columns = this.state.dataColumns.map((columnName) => {
+        var buttonDirectionClass = 'sort-by--' + (this.state.sortBy.direction === '' ? 'asc' : 'desc');
+
+        var columns = this.state.dataColumns.map((column) => {
             return (
-                <th key={columnName}>
-                    <h3>{columnName}</h3>
-                    <input type="text" name={columnName} onChange={this.filterChange.bind(this, columnName)} value={this.state.filterQuery.columnName} />
-                    <button type="button" onClick={this.sortBy.bind(this, columnName)}>sort</button>
+                <th key={column}>
+                    <h3>{column}</h3>
+                    <input type="text" name={column} onChange={this.filterChange.bind(this, column)} value={this.state.filterQuery.column} />
+                    <button
+                    type="button"
+                onClick={this.sortBy.bind(this, column)}
+                className={this.state.sortBy.property === column ? 'sort-by sort-by--active ' + buttonDirectionClass : 'sort-by'}>
+                        sort
+                    </button>
                 </th>
             );
         });
@@ -82,6 +95,6 @@ var App = React.createClass({
 });
 
 React.render(
-  <App />,
+  <DataTable data={candidates.data} columns={candidates.columns} defaultSort="school" />,
   document.getElementById('app')
 );
