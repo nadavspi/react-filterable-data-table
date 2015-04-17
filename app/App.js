@@ -15,8 +15,13 @@ var App = React.createClass({
             },
             filteredData: candidates.data.sort(sortBy('name')),
             filterQuery: {
-                name: '',
-                school: ''
+                "school": '',
+                "name": '',
+                "email": '',
+                "phone": '',
+                "date": '',
+                "status": '',
+                "stage": ''
             }
         };
     },
@@ -28,12 +33,18 @@ var App = React.createClass({
     },
 
     filterData () {
-        var filteredData = this.state.data.filter((item) => {
-            return (
-                item.name.toLowerCase().indexOf(this.state.filterQuery.name.toLowerCase()) > -1 &&
-                    // item[x].toLowerCase().indexOf(this.state.filterQuery.name.toLowerCase()) > -1 &&
-                    item.school.toLowerCase().indexOf(this.state.filterQuery.school.toLowerCase()) > -1
-            );
+        var filteredIndexes = this.state.data.map((item) => {
+            return this.state.dataHeaders.map(property =>
+                item[property].toLowerCase().
+                    indexOf(this.state.filterQuery[property].toLowerCase()));
+            }).map((item) => {
+                return item.reduce((previous, current) => {
+                    return Math.min(previous, current);
+                });
+            });
+
+        var filteredData = this.state.data.filter((item, i) => {
+            return filteredIndexes[i] > -1;
         }).sort(sortBy(this.state.sortBy.direction + this.state.sortBy.property));
 
         this.setState({ filteredData });
