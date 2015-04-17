@@ -1,5 +1,5 @@
 var candidates = {
-    "headers": [
+    "columns": [
         "school",
         "name",
         "email",

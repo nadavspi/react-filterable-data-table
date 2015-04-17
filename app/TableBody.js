@@ -6,14 +6,14 @@ var TableBody = React.createClass({
 
     propTypes: {
         data: React.PropTypes.array.isRequired,
-        headers: React.PropTypes.array.isRequired
+        columns: React.PropTypes.array.isRequired
     },
 
     render () {
         var rows = this.props.data.map((candidate) => {
             return (
                 <tr key={candidate.name}>
-                    {this.props.headers.map((property) => {
+                    {this.props.columns.map((property) => {
                         return <td key={property}>{candidate[property]}</td>;
                     })}
                 </tr>

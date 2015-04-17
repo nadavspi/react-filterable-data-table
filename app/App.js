@@ -5,14 +5,14 @@ var sortBy = require('sort-by');
 
 var App = React.createClass({
     getInitialState () {
-        var filterQuery = candidates.headers.reduce((headers, i) => {
-            headers[i] = '';
-            return headers;
+        var filterQuery = candidates.columns.reduce((columns, i) => {
+            columns[i] = '';
+            return columns;
         }, {});
 
         return {
             data: candidates.data,
-            dataHeaders: candidates.headers,
+            dataColumns: candidates.columns,
             sortBy: {
                 property: 'name',
                 direction: ''
@@ -30,7 +30,7 @@ var App = React.createClass({
 
     filterData () {
         var filteredIndexes = this.state.data.map((item) => {
-            return this.state.dataHeaders.map(property =>
+            return this.state.dataColumns.map(property =>
                 item[property].toLowerCase().
                     indexOf(this.state.filterQuery[property].toLowerCase()));
             }).map((item) => {
@@ -58,8 +58,7 @@ var App = React.createClass({
     },
 
     render () {
-        console.log(this.state.filterQuery);
-        var headers = this.state.dataHeaders.map((columnName) => {
+        var columns = this.state.dataColumns.map((columnName) => {
             return (
                 <th key={columnName}>
                     <h3>{columnName}</h3>
@@ -73,10 +72,10 @@ var App = React.createClass({
             <table className="pure-table">
                 <thead>
                     <tr>
-                        {headers}
+                        {columns}
                     </tr>
                 </thead>
-                <TableBody data={this.state.filteredData} headers={this.state.dataHeaders} />
+                <TableBody data={this.state.filteredData} columns={this.state.dataColumns} />
             </table>
         );
     }
