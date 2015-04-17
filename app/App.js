@@ -1,11 +1,15 @@
 var React = require('react');
-var TableHead = require('./TableHead');
 var TableBody = require('./TableBody');
 var candidates = require('./data');
 var sortBy = require('sort-by');
 
 var App = React.createClass({
     getInitialState () {
+        var filterQuery = candidates.headers.reduce((headers, i) => {
+            headers[i] = '';
+            return headers;
+        }, {});
+
         return {
             data: candidates.data,
             dataHeaders: candidates.headers,
@@ -14,15 +18,7 @@ var App = React.createClass({
                 direction: ''
             },
             filteredData: candidates.data.sort(sortBy('name')),
-            filterQuery: {
-                "school": '',
-                "name": '',
-                "email": '',
-                "phone": '',
-                "date": '',
-                "status": '',
-                "stage": ''
-            }
+            filterQuery
         };
     },
 
@@ -62,6 +58,7 @@ var App = React.createClass({
     },
 
     render () {
+        console.log(this.state.filterQuery);
         var headers = this.state.dataHeaders.map((columnName) => {
             return (
                 <th key={columnName}>
