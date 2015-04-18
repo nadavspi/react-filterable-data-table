@@ -1,5 +1,6 @@
 var React = require('react');
 var ColumnFilter = require('./ColumnFilter');
+var ColumnSort = require('./ColumnSort');
 
 var TableHead = React.createClass({
     propTypes: {
@@ -18,8 +19,6 @@ var TableHead = React.createClass({
     },
 
     render () {
-        var buttonDirectionClass = 'sort-by--' + (this.props.sortBy.direction === '' ? 'asc' : 'desc');
-
         return (
                 <thead>
                 {
@@ -28,13 +27,7 @@ var TableHead = React.createClass({
                                 <th key={column.name}>
                                 <h3>{column.label || column.name}</h3>
                                 <ColumnFilter data={this.props.data} type={column.type} name={column.name} handleChange={this.handleFilterChange.bind(this, column)} value={this.props.filterQuery[column.name]} />
-                                <button
-                            type="button"
-                            onClick={this.props.handleSort.bind(null, column)}
-                            className={this.props.sortBy.column === column.name ? 'sort-by sort-by--active ' + buttonDirectionClass : 'sort-by'}
-                                >
-                                sort
-                            </button>
+                                <ColumnSort name={column.name} handleSort={this.props.handleSort.bind(null, column)} sortBy={this.props.sortBy} />
                                 </th>
                         );
                     })
