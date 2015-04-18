@@ -10,7 +10,7 @@ var candidates = {
         },
         {
             name: "email",
-            type: "text"
+            type: "email"
         },
         {
             name: "phone",

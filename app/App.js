@@ -67,6 +67,7 @@ var DataTable = React.createClass({
         return (
             <table className="pure-table">
                 <TableHead
+                    data={this.state.filteredData}
                     columns={this.state.dataColumns}
                     filterQuery={this.state.filterQuery}
                     handleFilter={this.handleFilter}
