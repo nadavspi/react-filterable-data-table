@@ -1,12 +1,27 @@
 var candidates = {
     "columns": [
-        "school",
-        "name",
-        "email",
-        "phone",
-        "date",
-        "status",
-        "stage"
+        {
+            name: "school",
+            type: "text"
+        },
+        {
+            name: "name",
+        },
+        {
+            name: "email",
+        },
+        {
+            name: "phone",
+        },
+        {
+            name: "date",
+        },
+        {
+            name: "status",
+        },
+        {
+            name: "stage"
+        }
     ],
 
     "data": [

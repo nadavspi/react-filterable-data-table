@@ -11,10 +11,11 @@ var DataTable = React.createClass({
     },
 
     getInitialState () {
-        var filterQuery = this.props.columns.reduce((columns, i) => {
-            columns[i] = '';
-            return columns;
-        }, {});
+        var filterQuery = this.props.columns.map(column => column.name)
+                .reduce((columns, i) => {
+                    columns[i] = '';
+                    return columns;
+                }, {});
 
         return {
             data: this.props.data,
@@ -36,9 +37,9 @@ var DataTable = React.createClass({
 
     filterData () {
         var filteredIndexes = this.state.data.map((item) => {
-            return this.state.dataColumns.map(property =>
-                item[property].toLowerCase().
-                    indexOf(this.state.filterQuery[property].toLowerCase()));
+            return this.state.dataColumns.map(column =>
+                item[column.name].toLowerCase().
+                    indexOf(this.state.filterQuery[column.name].toLowerCase()));
             }).map((item) => {
                 return item.reduce((previous, current) => {
                     return Math.min(previous, current);
@@ -68,13 +69,13 @@ var DataTable = React.createClass({
 
         var columns = this.state.dataColumns.map((column) => {
             return (
-                <th key={column}>
-                    <h3>{column}</h3>
-                    <input type="text" name={column} onChange={this.filterChange.bind(this, column)} value={this.state.filterQuery.column} />
+                    <th key={column.name}>
+                    <h3>{column.name}</h3>
+                    <input type="text" name={column.name} onChange={this.filterChange.bind(this, column.name)} value={this.state.filterQuery[column.name]} />
                     <button
                     type="button"
-                onClick={this.sortBy.bind(this, column)}
-                className={this.state.sortBy.property === column ? 'sort-by sort-by--active ' + buttonDirectionClass : 'sort-by'}>
+                onClick={this.sortBy.bind(this, column.name)}
+                className={this.state.sortBy.property === column.name ? 'sort-by sort-by--active ' + buttonDirectionClass : 'sort-by'}>
                         sort
                     </button>
                 </th>
