@@ -21,7 +21,7 @@ var TableHead = React.createClass({
         var columns = this.props.columns.map((column) => {
             return (
                     <th key={column.name}>
-                    <h3>{column.name}</h3>
+                    <h3>{column.label || column.name}</h3>
                     <input type="text" name={column.name} onChange={this.handleFilterChange.bind(this, column)} value={this.props.filterQuery[column.name]} />
                     <button
                     type="button"

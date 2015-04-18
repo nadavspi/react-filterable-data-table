@@ -14,6 +14,7 @@ var candidates = {
         },
         {
             name: "phone",
+            label: "Phone Number",
             type: "text"
         },
         {
