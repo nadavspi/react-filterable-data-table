@@ -1,4 +1,5 @@
 var React = require('react');
+var TableHead = require('./TableHead');
 var TableBody = require('./TableBody');
 var candidates = require('./data');
 var sortBy = require('sort-by');
@@ -29,9 +30,7 @@ var DataTable = React.createClass({
         };
     },
 
-    filterChange (column, e) {
-        var filterQuery = this.state.filterQuery;
-        filterQuery[column.name] = e.target.value;
+    handleFilter (filterQuery) {
         this.setState({ filterQuery }, this.filterData);
     },
 
@@ -53,7 +52,7 @@ var DataTable = React.createClass({
         this.setState({ filteredData });
     },
 
-    sortBy (column) {
+        handleSort (column) {
         var direction = '';
 
         // If already sorting by the column, switch direction
@@ -65,31 +64,19 @@ var DataTable = React.createClass({
     },
 
     render () {
-        var buttonDirectionClass = 'sort-by--' + (this.state.sortBy.direction === '' ? 'asc' : 'desc');
-
-        var columns = this.state.dataColumns.map((column) => {
-            return (
-                    <th key={column.name}>
-                    <h3>{column.name}</h3>
-                    <input type="text" name={column.name} onChange={this.filterChange.bind(this, column)} value={this.state.filterQuery[column.name]} />
-                    <button
-                    type="button"
-                onClick={this.sortBy.bind(this, column)}
-                className={this.state.sortBy.column === column.name ? 'sort-by sort-by--active ' + buttonDirectionClass : 'sort-by'}>
-                        sort
-                    </button>
-                </th>
-            );
-        });
-
         return (
             <table className="pure-table">
-                <thead>
-                    <tr>
-                        {columns}
-                    </tr>
-                </thead>
-                <TableBody data={this.state.filteredData} columns={this.state.dataColumns} />
+                <TableHead
+                    columns={this.state.dataColumns}
+                    filterQuery={this.state.filterQuery}
+                    handleFilter={this.handleFilter}
+                    sortBy={this.state.sortBy}
+                    handleSort={this.handleSort}
+                />
+                <TableBody
+                    data={this.state.filteredData}
+                    columns={this.state.dataColumns}
+                />
             </table>
         );
     }
