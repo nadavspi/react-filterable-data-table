@@ -6,21 +6,27 @@ var candidates = {
         },
         {
             name: "name",
+            type: "text"
         },
         {
             name: "email",
+            type: "text"
         },
         {
             name: "phone",
+            type: "text"
         },
         {
             name: "date",
+            type: "text"
         },
         {
             name: "status",
+            type: "select"
         },
         {
-            name: "stage"
+            name: "stage",
+            type: "select"
         }
     ],
 
