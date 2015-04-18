@@ -67,7 +67,7 @@ var DataTable = React.createClass({
         return (
             <table className="pure-table">
                 <TableHead
-                    data={this.state.filteredData}
+                    data={this.props.data}
                     columns={this.state.dataColumns}
                     filterQuery={this.state.filterQuery}
                     handleFilter={this.handleFilter}
@@ -75,7 +75,7 @@ var DataTable = React.createClass({
                     handleSort={this.handleSort}
                 />
                 <TableBody
-                    data={this.state.filteredData}
+                    filteredData={this.state.filteredData}
                     columns={this.state.dataColumns}
                 />
             </table>

@@ -5,12 +5,12 @@ var TableBody = React.createClass({
     mixins: [PureRenderMixin],
 
     propTypes: {
-        data: React.PropTypes.array.isRequired,
+        filteredData: React.PropTypes.array.isRequired,
         columns: React.PropTypes.array.isRequired
     },
 
     render () {
-        var rows = this.props.data.map((candidate) => {
+        var rows = this.props.filteredData.map((candidate) => {
             return (
                 <tr key={candidate.name}>
                     {this.props.columns.map((column) => {

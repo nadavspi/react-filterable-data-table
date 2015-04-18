@@ -8,10 +8,19 @@ var ColumnFilterInput = React.createClass({
 
 var ColumnFilterSelect = React.createClass({
     render () {
+        // Create an array of all unique values for that column then map it to an <option>
+        var options = this.props.data.map((item) => {
+                return item[this.props.name];
+            }).filter((value, i, self) => {
+                return self.indexOf(value) === i;
+            }).map((option) => {
+                return <option value={option}>{option}</option>;
+            });
+
         return (
             <select name={this.props.name} onChange={this.props.handleChange}>
-                <option value="Cx">Cx</option>
-                <option value="D">D</option>
+		<option value=""></option>
+		{options}
             </select>
         );
     }
