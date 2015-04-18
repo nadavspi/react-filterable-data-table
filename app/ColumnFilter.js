@@ -14,7 +14,7 @@ var ColumnFilterSelect = React.createClass({
             }).filter((value, i, self) => {
                 return self.indexOf(value) === i;
             }).map((option) => {
-                return <option value={option}>{option}</option>;
+                return <option value={option} key={option}>{option}</option>;
             });
 
         return (
