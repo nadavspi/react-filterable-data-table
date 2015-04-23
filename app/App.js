@@ -21,7 +21,6 @@ var DataTable = React.createClass({
 
     return {
         data: this.props.data,
-        dataColumns: this.props.columns,
         sortBy: {
             column: this.props.defaultSort,
             direction: ''
@@ -41,7 +40,7 @@ var DataTable = React.createClass({
 
   filterData () {
     var filteredIndexes = this.state.data.map((item) => {
-      return this.state.dataColumns.map(column =>
+      return this.props.columns.map(column =>
         item[column.name].toLowerCase().
         indexOf(this.state.filterQuery[column.name].toLowerCase()));
       }).map((item) => {
@@ -81,14 +80,14 @@ var DataTable = React.createClass({
       <table className="pure-table">
         <TableHead
           data={this.props.data}
-          columns={this.state.dataColumns}
+          columns={this.props.columns}
           filterQuery={this.state.filterQuery}
           handleFilter={this.handleFilter}
           sortBy={this.state.sortBy}
           handleSort={this.handleSort} />
         <TableBody
           filteredData={paginated.data}
-          columns={this.state.dataColumns} />
+          columns={this.props.columns} />
         <tfoot>
           <Paginator
             page={paginated.page}
