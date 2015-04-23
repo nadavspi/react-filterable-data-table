@@ -3,6 +3,7 @@ var TableHead = require('./TableHead');
 var TableBody = require('./TableBody');
 var candidates = require('./data');
 var sortBy = require('sort-by');
+var Paginator = require('react-pagify');
 
 var DataTable = React.createClass({
     propTypes: {
@@ -26,7 +27,11 @@ var DataTable = React.createClass({
                 direction: ''
             },
             filteredData: this.props.data.sort(sortBy(this.props.defaultSort)),
-            filterQuery
+            filterQuery,
+            pagination: {
+                page: 0,
+                perPage: 10
+            }
         };
     },
 
@@ -63,7 +68,15 @@ var DataTable = React.createClass({
         this.setState({ sortBy: { column: column.name, direction } }, this.filterData);
     },
 
+    handlePagination (page) {
+      const { pagination } = this.state;
+      pagination.page = page;
+      this.setState({ pagination });
+    },
+
     render () {
+        const paginated = Paginator.paginate(this.state.filteredData, this.state.pagination);
+
         return (
             <table className="pure-table">
                 <TableHead
@@ -75,9 +88,18 @@ var DataTable = React.createClass({
                     handleSort={this.handleSort}
                 />
                 <TableBody
-                    filteredData={this.state.filteredData}
+                    filteredData={paginated.data}
                     columns={this.state.dataColumns}
                 />
+                <tfoot>
+                    <Paginator
+                        page={paginated.page}
+                        pages={paginated.amount}
+                        beginPages={3}
+                        endPages={3}
+                        onSelect={this.handlePagination}
+                        />
+                </tfoot>
             </table>
         );
     }
