@@ -13,6 +13,7 @@ var DataTable = React.createClass({
   },
 
   getInitialState () {
+    // Create an object with column names as keys
     var filterQuery = this.props.columns.map(column => column.name)
     .reduce((columns, i) => {
       columns[i] = '';
@@ -20,7 +21,6 @@ var DataTable = React.createClass({
     }, {});
 
     return {
-        data: this.props.data,
         sortBy: {
             column: this.props.defaultSort,
             direction: ''
@@ -38,8 +38,13 @@ var DataTable = React.createClass({
     this.setState({ filterQuery }, this.filterData);
   },
 
+  handleFilterReset () {
+    // doesn't clear select filters
+    this.setState({ filterQuery: this.getInitialState().filterQuery }, this.filterData);
+  },
+
   filterData () {
-    var filteredIndexes = this.state.data.map((item) => {
+    var filteredIndexes = this.props.data.map((item) => {
       return this.props.columns.map(column =>
         item[column.name].toLowerCase().
         indexOf(this.state.filterQuery[column.name].toLowerCase()));
@@ -49,7 +54,7 @@ var DataTable = React.createClass({
         });
     });
 
-    var filteredData = this.state.data.filter((item, i) => {
+    var filteredData = this.props.data.filter((item, i) => {
       return filteredIndexes[i] > -1;
     }).sort(sortBy(this.state.sortBy.direction + this.state.sortBy.column));
 
@@ -95,6 +100,7 @@ var DataTable = React.createClass({
             beginPages={3}
             endPages={3}
             onSelect={this.handlePagination} />
+            <button onClick={this.handleFilterReset}>Reset filters</button>
         </tfoot>
       </table>
     );
