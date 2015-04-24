@@ -7,6 +7,11 @@ var ColumnFilterInput = React.createClass({
 });
 
 var ColumnFilterSelect = React.createClass({
+    propTypes: {
+        data: React.PropTypes.array.isRequired,
+        name: React.PropTypes.string.isRequired
+    },
+
     render () {
         // Create an array of all unique values for that column then map it to an <option>
         var options = this.props.data.map((item) => {
