@@ -8,13 +8,17 @@ var ColumnSort = React.createClass({
   },
 
   render () {
-    var buttonDirectionClass = 'sort-by--' + (this.props.sortBy.direction === '' ? 'asc' : 'desc');
+    let className = 'sort-by';
+    const buttonDirectionClass = 'sort-by--' + (this.props.sortBy.direction === '' ? 'asc' : 'desc');
+    if (this.props.sortBy.column === this.props.name) {
+      className = 'sort-by sort-by--active ' + buttonDirectionClass;
+    }
 
     return (
       <button
 	type="button"
 	onClick={this.props.handleSort}
-	className={this.props.sortBy.column === this.props.name ? 'sort-by sort-by--active ' + buttonDirectionClass : 'sort-by'}
+	className={className}
       >
 	Sort
       </button>
