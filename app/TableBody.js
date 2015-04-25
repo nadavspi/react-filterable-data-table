@@ -1,8 +1,8 @@
-var React = require('react');
-var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
+import React from 'react';
+import Addons from 'react/addons';
 
-var TableBody = React.createClass({
-  mixins: [PureRenderMixin],
+export default React.createClass({
+  mixins: [Addons.PureRenderMixin],
 
   propTypes: {
     filteredData: React.PropTypes.array.isRequired,
@@ -10,7 +10,7 @@ var TableBody = React.createClass({
   },
 
   render () {
-    var rows = this.props.filteredData.map((candidate) => {
+    const rows = this.props.filteredData.map((candidate) => {
       return (
         <tr key={candidate.name}>
           {this.props.columns.map((column) => {
@@ -27,6 +27,3 @@ var TableBody = React.createClass({
     );
   }
 });
-
-
-module.exports = TableBody;

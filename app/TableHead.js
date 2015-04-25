@@ -1,8 +1,8 @@
-var React = require('react');
-var ColumnFilter = require('./ColumnFilter');
-var ColumnSort = require('./ColumnSort');
+import React from 'react';
+import ColumnFilter from './ColumnFilter';
+import ColumnSort from './ColumnSort';
 
-var TableHead = React.createClass({
+export default React.createClass({
   propTypes: {
     data: React.PropTypes.array.isRequired,
     columns: React.PropTypes.array.isRequired,
@@ -13,7 +13,7 @@ var TableHead = React.createClass({
   },
 
   handleFilterChange (column, e) {
-    var filterQuery = this.props.filterQuery;
+    const filterQuery = this.props.filterQuery;
     filterQuery[column.name] = e.target.value;
     this.props.handleFilter(filterQuery);
   },
@@ -44,5 +44,3 @@ var TableHead = React.createClass({
     );
   }
 });
-
-module.exports = TableHead;

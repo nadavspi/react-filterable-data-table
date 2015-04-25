@@ -1,12 +1,12 @@
-var React = require('react');
+import React from 'react';
 
-var ColumnFilterInput = React.createClass({
+const ColumnFilterInput = React.createClass({
   render () {
     return <input type={this.props.type} name={this.props.name} onChange={this.props.handleChange} value={this.props.value} />;
   }
 });
 
-var ColumnFilterSelect = React.createClass({
+const ColumnFilterSelect = React.createClass({
   propTypes: {
     data: React.PropTypes.array.isRequired,
     name: React.PropTypes.string.isRequired
@@ -14,7 +14,7 @@ var ColumnFilterSelect = React.createClass({
 
   render () {
     // Create an array of all unique values for that column then map it to an <option>
-    var options = this.props.data.map((item) => {
+    const options = this.props.data.map((item) => {
       return item[this.props.name];
     }).filter((value, i, self) => {
       return self.indexOf(value) === i;
@@ -31,7 +31,7 @@ var ColumnFilterSelect = React.createClass({
   }
 });
 
-var ColumnFilter = React.createClass({
+export default React.createClass({
   propTypes: {
     type: React.PropTypes.oneOf(['text', 'email', 'select']).isRequired,
     name: React.PropTypes.string.isRequired,
@@ -40,7 +40,7 @@ var ColumnFilter = React.createClass({
   },
 
   render () {
-    var filter;
+    let filter;
     if (this.props.type === 'text' || this.props.type === 'email') {
       filter = <ColumnFilterInput {...this.props} />;
     } else if (this.props.type === 'select') {
@@ -52,5 +52,3 @@ var ColumnFilter = React.createClass({
     );
   }
 });
-
-module.exports = ColumnFilter;

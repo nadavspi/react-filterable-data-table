@@ -1,6 +1,6 @@
-var React = require('react');
+import React from 'react';
 
-var ColumnSort = React.createClass({
+export default React.createClass({
   propTypes: {
     handleSort: React.PropTypes.func.isRequired,
     name: React.PropTypes.string.isRequired,
@@ -25,5 +25,3 @@ var ColumnSort = React.createClass({
     );
   }
 });
-
-module.exports = ColumnSort;

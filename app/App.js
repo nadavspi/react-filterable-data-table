@@ -1,11 +1,11 @@
-var React = require('react');
-var TableHead = require('./TableHead');
-var TableBody = require('./TableBody');
-var candidates = require('./data');
-var sortBy = require('sort-by');
-var Paginator = require('react-pagify');
+import React from 'react';
+import TableHead from './TableHead';
+import TableBody from './TableBody';
+import candidates from './data';
+import sortBy from 'sort-by';
+import Paginator from 'react-pagify';
 
-var DataTable = React.createClass({
+const DataTable = React.createClass({
   propTypes: {
     data: React.PropTypes.array.isRequired,
     columns: React.PropTypes.array.isRequired,
@@ -14,7 +14,7 @@ var DataTable = React.createClass({
 
   getInitialState () {
     // Create an object with column names as keys
-    var filterQuery = this.props.columns.map(column => column.name)
+    const filterQuery = this.props.columns.map(column => column.name)
       .reduce((columns, i) => {
         columns[i] = '';
         return columns;
@@ -44,7 +44,7 @@ var DataTable = React.createClass({
   },
 
   filterData () {
-    var filteredIndexes = this.props.data.map((item) => {
+    const filteredIndexes = this.props.data.map((item) => {
       return this.props.columns.map(column =>
         item[column.name].toLowerCase().
         indexOf(this.state.filterQuery[column.name].toLowerCase()));
@@ -54,7 +54,7 @@ var DataTable = React.createClass({
         });
     });
 
-    var filteredData = this.props.data.filter((item, i) => {
+    const filteredData = this.props.data.filter((item, i) => {
       return filteredIndexes[i] > -1;
     }).sort(sortBy(this.state.sortBy.direction + this.state.sortBy.column));
 
@@ -62,7 +62,7 @@ var DataTable = React.createClass({
   },
 
   handleSort (column) {
-    var direction = '';
+    let direction = '';
 
     // If already sorting by the column, switch direction
     if (this.state.sortBy.column === column.name && this.state.sortBy.direction === '') {
