@@ -2,30 +2,30 @@ var React = require('react');
 var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var TableBody = React.createClass({
-    mixins: [PureRenderMixin],
+  mixins: [PureRenderMixin],
 
-    propTypes: {
-        filteredData: React.PropTypes.array.isRequired,
-        columns: React.PropTypes.array.isRequired
-    },
+  propTypes: {
+    filteredData: React.PropTypes.array.isRequired,
+    columns: React.PropTypes.array.isRequired
+  },
 
-    render () {
-        var rows = this.props.filteredData.map((candidate) => {
-            return (
-                <tr key={candidate.name}>
-                    {this.props.columns.map((column) => {
-                        return <td key={column.name}>{candidate[column.name]}</td>;
-                    })}
-                </tr>
-            );
-        });
+  render () {
+    var rows = this.props.filteredData.map((candidate) => {
+      return (
+        <tr key={candidate.name}>
+          {this.props.columns.map((column) => {
+            return <td key={column.name}>{candidate[column.name]}</td>;
+          })}
+        </tr>
+      );
+    });
 
-        return (
-            <tbody>
-                {rows}
-            </tbody>
-        );
-    }
+    return (
+      <tbody>
+        {rows}
+      </tbody>
+    );
+  }
 });
 
 

@@ -15,22 +15,22 @@ var DataTable = React.createClass({
   getInitialState () {
     // Create an object with column names as keys
     var filterQuery = this.props.columns.map(column => column.name)
-    .reduce((columns, i) => {
-      columns[i] = '';
-      return columns;
-    }, {});
+      .reduce((columns, i) => {
+        columns[i] = '';
+        return columns;
+      }, {});
 
     return {
-        sortBy: {
-            column: this.props.defaultSort,
-            direction: ''
-        },
-        filteredData: this.props.data.sort(sortBy(this.props.defaultSort)),
-        filterQuery,
-        pagination: {
-            page: 0,
-            perPage: 10
-        }
+      sortBy: {
+        column: this.props.defaultSort,
+        direction: ''
+      },
+      filteredData: this.props.data.sort(sortBy(this.props.defaultSort)),
+      filterQuery,
+      pagination: {
+        page: 0,
+        perPage: 10
+      }
     };
   },
 
