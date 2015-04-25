@@ -1,6 +1,13 @@
 import React from 'react';
 
 const ColumnFilterInput = React.createClass({
+  propTypes: {
+    type: React.PropTypes.oneOf(['text', 'email']).isRequired,
+    name: React.PropTypes.string.isRequired,
+    handleChange: React.PropTypes.func.isRequired,
+    value: React.PropTypes.string.isRequired
+  },
+
   render () {
     return <input type={this.props.type} name={this.props.name} onChange={this.props.handleChange} value={this.props.value} />;
   }
@@ -9,7 +16,8 @@ const ColumnFilterInput = React.createClass({
 const ColumnFilterSelect = React.createClass({
   propTypes: {
     data: React.PropTypes.array.isRequired,
-    name: React.PropTypes.string.isRequired
+    name: React.PropTypes.string.isRequired,
+    handleChange: React.PropTypes.func.isRequired
   },
 
   render () {
